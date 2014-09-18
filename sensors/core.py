@@ -1,16 +1,35 @@
 # -*- coding: utf-8 -*-
 
-import os.path
+import os
 import sys
 import yaml
 
 
-def load_config(config_file=None):
-    if not config_file:
-        config_file = os.path.join(os.path.dirname(__file__), 'conf', 'sensors.yml')
-    with open(config_file, 'r') as f:
-        config = yaml.load(f)
-    return config
+def load_config_file():
+    """ Load configuration file in order (first found is used): ENV, HOME, /etc. """
+
+    path_env = os.getenv('SENSORS_CONFIG', None)
+    if path_env:
+        path_env = os.path.expanduser(path_env)
+    path_home = os.path.expanduser('~/.sensors.yml')
+    path_etc = '/etc/sensors/sensors.yml'
+
+    config = None
+    for path in [path_env, path_home, path_etc]:
+        if path and os.path.exists(path):
+            try:
+                with open(path, 'r') as f:
+                    config = yaml.load(f)
+            except IOError as e:
+                print("Error: {}".format(str(e)))
+                sys.exit(1)
+            except yaml.YAMLError as e:
+                print("Error: {}".format(str(e)))
+                sys.exit(1)
+            return config
+
+    print("Error: Configuration file not found.")
+    sys.exit(1)
 
 
 def probe_import(probe_full_name):

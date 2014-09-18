@@ -1,16 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
-
-from sensors.core import load_config, run_probes
+from sensors.core import load_config_file, run_probes
 
 
 if __name__ == '__main__':
-    config_file = None
-    try:
-        config_file = sys.argv[1]
-    except:
-        pass
-    config = load_config(config_file)
+    config = load_config_file()
     print(run_probes(config['probes']))
