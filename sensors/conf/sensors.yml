@@ -3,3 +3,4 @@ probes:
   - sensors.probes.cpu_utilization
   - sensors.probes.memory_percentage
   - sensors.probes.swap_percentage
+  - sensors.probes.zombie_processes_count

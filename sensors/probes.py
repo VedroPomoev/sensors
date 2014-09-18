@@ -21,3 +21,11 @@ def memory_percentage():
 def swap_percentage():
     used_swap = psutil.swap_memory().percent
     return used_swap
+
+
+def zombie_processes_count():
+    zombies_count = 0
+    for p in psutil.process_iter():
+        if p.status() == psutil.STATUS_ZOMBIE:
+            zombies_count += 1
+    return zombies_count
