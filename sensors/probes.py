@@ -8,9 +8,9 @@ cpu_count = psutil.cpu_count()
 probe_struct = namedtuple('cpu', ['total'] + ['cpu_{}'.format(cpu_num) for cpu_num in range(cpu_count)])
 
 def cpu_utilization():
-    per_cpu_load_snapshot = psutil.cpu_percent(interval=1, percpu=True)
-    cpu_load_snapshot = probe_struct._make([sum(per_cpu_load_snapshot)] + per_cpu_load_snapshot)
-    return cpu_load_snapshot
+    per_cpu_utilization_snapshot = psutil.cpu_percent(interval=1, percpu=True)
+    cpu_utilization_snapshot = probe_struct._make([sum(per_cpu_utilization_snapshot)] + per_cpu_utilization_snapshot)
+    return cpu_utilization_snapshot
 
 
 def memory_percentage():
