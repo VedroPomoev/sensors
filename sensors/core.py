@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from collections import OrderedDict
 import os
 import sys
 import yaml
@@ -42,7 +43,7 @@ def probe_import(probe_full_name):
 
 
 def run_probes(probes):
-    result = {}
+    result = OrderedDict()
     for p in probes:
         probe_method = probe_import(p)
         probe_result = probe_method()

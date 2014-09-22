@@ -6,4 +6,6 @@ from sensors.core import load_config_file, run_probes
 
 if __name__ == '__main__':
     config = load_config_file()
-    print(run_probes(config['probes']))
+    system_status = run_probes(config['probes'])
+    for probe in system_status.keys():
+        print("{}: {}".format(probe, system_status[probe]))
